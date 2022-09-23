@@ -1,0 +1,22 @@
+https://www.flickr.com/photos/196553611@N06/52367947041/in/dateposted-public/
+
+
+What are firewalls for ?
+
+The firewalls protect the network against any unauthorized users that try to acess it. It shelds the network from unnecessary network traffic. 
+
+
+
+Why is the traffic served over HTTPS ?
+
+The traffic is served over HTTPS because it is more secure. HTTPS uses port 443, which encrypts outgoing information. That in turn makes it very difficult for a hacker to spy on your site's data. 
+
+
+What are the monitoring clients used for ?
+
+The monitors are used to monitor the servers and the external network. As they monitor the servers, they gather information such as the CPU usage, memory consumption, I/O, Network, Disk Usage, processes, etc. It can also alert the admins to any issue that arises as the server runs. 
+
+
+Issues with this infrastructure ?
+
+If the SSL certificate was to be terminated, then there won't be any encryption on the network. a SPOF in this infrastucture is the single MySQL server, this is because it is not scalable. The problem with having the same components in all servers will be that If a single one of those components is compromised, the whole system is left vulnerable.  

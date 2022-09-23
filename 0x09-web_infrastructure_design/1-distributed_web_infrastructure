@@ -1,0 +1,37 @@
+https://www.flickr.com/photos/196553611@N06/52367001542/in/dateposted-public/
+
+For every additional element, why you are adding it;
+
+The extra servers were added to reduce the traffic on the network. The previous infrastructure had only one server which could malfunction and cause an interuption on the network. 
+
+
+
+What distribution algorithm your load balancer is configured with and how it works ?
+
+The load balancer in this infrastructure is configured with Round-robin laod balancing. This technique distributes clients requests to application servers in simple rotation. 
+
+
+
+Is your load-balancer enabling an Active-Active or Active-Passive setup, explain the difference between both;
+
+This infrasture uses an Active - Active cluster, this cluster is usually made of at least two nodes, both of which actively run the same service simultaneously. As for the Active - Passive cluster, it also has at least two nodes, however not all the nodes are going to be active. In the case of a two node setup, the inactive node will serve as a backup.
+
+
+
+How a database Primary-Replica (Master-Slave) cluster works ?
+
+The Primary-Replica cluster enables sata from one database server usually the master to be replicated to another server which is usually the slave.
+
+
+
+
+What is the difference between the Primary node and the Replica node in regard to the application ?
+
+The primary node handles all the write operations, while the Replica node handles the read operations.
+
+
+
+
+Issues with this infrastructure;
+
+Being that there are three servers in this infrastructure, there is no SPOF. All the sevrers go through the load balancer. And if a server malfunctions the others will still be able ro run. In terms of security issues, the information that is stored or transmitted through this network are liable to being hacked or stolen. There is no SSL certificate in this infrastructure. There is also no monitoring client present. So there is no way of monitoring the servers. 
