@@ -1,5 +1,4 @@
-exec {'kill_process':
-  command  => 'pkill -f killmenow',
-  provider => 'shell',
-  path     => ['/usr/bin', '/usr/sbin',]
+exec {'pkill killmenow':
+  path => '/usr/sbin:/usr/bin:/sbin:/bin',
+  returns => [0, 1],
 }
