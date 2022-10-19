@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Loop forever
+
+while true
+do
+  :
+done
