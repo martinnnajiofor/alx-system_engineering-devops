@@ -1,38 +1,18 @@
 #!/usr/bin/env bash
-# This configures the Nginx so that its HTTP response contains a custom header (on web-01 and web-02)
-
-sudo apt update
-sudo apt install -y nginx
-cd /var/www/ || exit
-sudo chmod 777 html
-echo 'Hello World!' > html/index.html
-echo "Ceci n'est pas une page" > html/err_page.html
-sudo chmod 755 html
-cd /etc/nginx/ || exit
-sudo chmod 777 sites-available
-sudo chmod 777 sites-available/default
-echo "server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-	server_name _;
-location / {
-	
-	add_header X-Served-By \"\$hostname\";
-	try_files \$uri \$uri/ =404;
-}
-location /redirect_me{
-	return 301 https://www.alxafrica.com;
-}
-error_page 404 /error_page.html;
-location /error_page.html {
-	root /var/www/html;
-	internal;
-}
-}" > sites-available/default
-sudo chmod 644 sites-available/default
-sudo chmod 755 sites-available
-cd ~ || exit
+# This configures Nginx so that its HTTP response contains a custom header (on web-01 and web-02)
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo sed -i "21s/^listen .*/listen 80" /etc/nginx/sites-enabled/default
+sudo ufw allow 'Nginx HTTP'
+sudo mkdir -p /var/www/html
+sudo chmod -R 755 /var/www
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
+file=/etc/nginx/sites-enabled/default
+redirect="\     rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4/$1";
+sudo sed -i " /server_name _;/a ${redirect} permanent;" $file
+echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
+err="\        error_page\ 404 /custom_404.html;\n\        location\ = \ /custom_404.html\  {\n\t\troot\ /usr/share/nginx/html;\n\t\tinternal;\n\t}"
+sudo sed -i "/server_name _;/a ${err}" $file
+custom_header="\    add_header X-Served-By $HOSTNAME;"
+sudo sed -i "/server_name _;/a ${custom_header}" $file
 sudo service nginx restart
