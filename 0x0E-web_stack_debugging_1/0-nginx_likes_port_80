@@ -2,5 +2,5 @@
 # This bash script has the minimum number of commands to automate the fix.
 
 rm /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default
 service nginx restart
