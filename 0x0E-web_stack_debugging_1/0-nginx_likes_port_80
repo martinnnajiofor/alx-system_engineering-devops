@@ -2,4 +2,4 @@
 # This bash script has the minimum number of commands to automate the fix.
 
 sed -i 's/8080/80/' /etc/nginx/sites-available/default
-sudo service nginx restart
+service nginx restart
