@@ -1,0 +1,4 @@
+#!/bin/bash
+git add .
+git commit -m '0x16-api_advanced'
+git push
