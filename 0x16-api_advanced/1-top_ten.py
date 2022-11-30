@@ -1,22 +1,17 @@
 #!/usr/bin/python3
-""" queries the Reddit API and prints the titles of the first 10 hot posts
- listed for a given subreddit """
-def top_ten(subreddit):
-    """queries the Reddit API and prints the titles of the first 10 hot
-       posts listed for a given subreddit."""
-    import requests
-    import sys
+import requests
+headers = {'user-agent': 'Reddit Scraper'}
 
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    try:
-        response = requests.get(url, headers=headers,
-                                allow_redirects=False)
-        if response.status_code == 200:
-            children = response.json().get('data').get('children')
-            for i in range(10):
-                print(children[i].get('data').get('title'))
-        else:
-            print("None")
-    except Exception:
-        print("None")
+
+def top_ten(subreddit):
+    """Returns top ten hot results for a subreddit"""
+    hot_endpoint = 'https://www.reddit.com/r/{}/hot.json?limit=10'
+    url = hot_endpoint.format(subreddit)
+    response = requests.get(url, headers=headers, allow_redirects=False)
+    if response.status_code == 200:
+        hot = response.json()
+        top10 = hot.get("data").get("children")
+        for result in top10:
+            print(result.get("data").get("title"))
+    if response.status_code == 404 or response.status_code == 302:
+        print(None)
