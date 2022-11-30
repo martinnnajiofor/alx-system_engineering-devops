@@ -1,17 +1,20 @@
 #!/usr/bin/python3
 import requests
-headers = {'user-agent': 'Reddit Scraper'}
+import sys
 
 
 def top_ten(subreddit):
-    """Returns top ten hot results for a subreddit"""
-    hot_endpoint = 'https://www.reddit.com/r/{}/hot.json?limit=10'
-    url = hot_endpoint.format(subreddit)
-    response = requests.get(url, headers=headers, allow_redirects=False)
+    """ Returns: top ten post titles
+        or None if queried subreddit is invalid """
+    headers = {'User-Agent': 'xica369'}
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    parameters = {'limit': 10}
+    response = requests.get(url, headers=headers, allow_redirects=False,
+                            params=parameters)
+
     if response.status_code == 200:
-        hot = response.json()
-        top10 = hot.get("data").get("children")
-        for result in top10:
-            print(result.get("data").get("title"))
-    if response.status_code == 404 or response.status_code == 302:
+        titles_ = response.json().get('data').get('children')
+        for title_ in titles_:
+            print(title_.get('data').get('title'))
+    else:
         print(None)
